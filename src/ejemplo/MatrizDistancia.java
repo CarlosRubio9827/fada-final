@@ -19,10 +19,10 @@ public class MatrizDistancia {
     int[][] matrizC;
     int[] oficina;
     HashMap<String, Sitio> sitios;
-    private Point[] document;
+    public Point[] document;
 
     public void Matriz(int ciudadx, int ciudady, int paquetes, ArrayList<Encomienda> enco) {
-        matrizC = new int[paquetes][paquetes];
+        matrizC = new int[paquetes + 1][paquetes + 1];
         Encomienda en, en1;
         int d, x, y;
         for (int i = 0; i < matrizC.length; i++) {
@@ -67,48 +67,87 @@ public class MatrizDistancia {
 
         //Ciclo para llenar la ciudad - matriz
         for (int i = 0; i < x; i++) {
+
             for (int j = 0; j < y; j++) {
-                dibujo[i][j] = "■";
+                dibujo[i][j] = "{■";
                 for (int e = 0; e < enco.size(); e++) {
                     if (i == enco.get(e).getX() && j == enco.get(e).getY()) {
-                        dibujo[i][j] = String.valueOf(e);
-                        String key = x + "," + y;
-                        if (oficina[0] == i && oficina[1] == j) {
-                            sitios.get(key).add((short)i);
-                        } else {
-                            this.document[i] = new Point(x, y);
-
-                            //si ya fue registrado ese punto se añade a la lista
-                            if (sitios.containsKey(key)) {
-                                sitios.get(key).add((short)i);
-                            } else {
-                                //sino se crea un nuevo lugar y se añade al hashmap
-                                Point point = new Point(x, y);
-                                Sitio place = new Sitio((short) (sitios.size() + 1), point, (short)i);
-                                sitios.put(key, place);
-                            }
+                        if ("■".equals(dibujo[i][j])) {
+                            dibujo[i][j] = "{";
                         }
+                        dibujo[i][j] += String.valueOf(e) + ",";
                     }
                 }
-            }}
-
-            dibujo[uox][uoy] = "O";
-
-            for (int i = 0; i < x; i++) {
-                for (int j = 0; j < y; j++) {
-                    System.out.print(" " + dibujo[i][j]);
-                }
-                System.out.println("");
+                dibujo[i][j] += "}";
             }
-
         }
 
-    
+        dibujo[uox][uoy] += "O";
 
-    
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                System.out.print(" " + dibujo[i][j]);
+            }
+            System.out.println("");
+        }
 
-    
+    }
 
+    /* // MÉTODO PARA RECORRER EL ARREGLO DE LAS ENTREGAS
+    public static String camino(int matriz_distancias[][], int paquetes) {
+    
+    boolean[] entregas_realizadas = new boolean[paquetes]; //Almacena el estado de las entregas
+    int distancia;
+    int entrega;
+    
+    for (int i = 0; i< entregas_realizadas.length;) {
+    distancia = distancia_entrega_cercana(entrega, matriz_distancias);
+    total = total + distancia;
+    camino = camino + "->" + entrega + "[" + distancia + "] ";
+    }
+    
+    imprimirMatrizDistancias(matriz_distancias);
+    
+    System.out.println (
+    
+    "Camino: " + camino);
+    System.out.println (
+    "El tiempo en realizar las (" + entregas + ") entregas fue: " + total);
+    return camino ;
+    }
+    // MÉTODO PARA DETERMINAR LA ULTIMA DISTANCIA MINIMA A CADA ENTREGA
+    public static int distancia_entrega_cercana(int pos, int matriz_distancias[][]) {
+    for (int j = 0; j < matriz_distancias.length; j++) {
+    if (pos != j) {
+    if (matriz_distancias[pos][j] != -1) {
+    entrega_cercana = matriz_distancias[pos][j];
+    break;
+    }
+    }
+    }
+    for (int j = 0; j <= matriz_distancias.length - 1; j++) {
+    if (pos != j && matriz_distancias[pos][j] != -1) {
+    if (matriz_distancias[pos][j] != -1) {
+    if (entrega_cercana < matriz_distancias[pos][j]) {
+    entrega_cercana = entrega_cercana;
+    } else {
+    entrega_cercana = matriz_distancias[pos][j];
+    entrega = j;
+    }
+    }
+    }
+    }
+    matriz_distancias[pos][entrega] = -1; //Pone -1 en las entregas que ya se hicieron
+    matriz_distancias[entrega][pos] = -1; //Pone -1 en las entregas que ya se hicieron
+    contador++;
+    entregas_realizadas[entrega - 1] = true; //Cambia el estado de cada entrega realizada
+    int pos2;
+    for (pos = 0, pos2 = 1; pos < entregas_realizadas.length; pos++, pos2++) {
+    System.out.println("La entrega: " + pos2 + " esta en: " + entregas_realizadas[pos]);
+    }
+    System.out.println(); //Salto de linea entre cada ciclo de entregas
+    return entrega_cercana;
+    }*/
     public int[][] getMatrizC() {
         return matrizC;
     }

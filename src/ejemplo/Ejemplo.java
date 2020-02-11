@@ -18,7 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author juan3
+ * @author Carlos Rubio
  */
 public class Ejemplo {
 
@@ -33,7 +33,7 @@ public class Ejemplo {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("FADA FILES", "fada");
         jFileChooser1.setFileFilter(filter);
         try {
-            jFileChooser1.setCurrentDirectory(new File("..\\fadaProyecto\\Test"));
+            //jFileChooser1.setCurrentDirectory(new File("..\\fadaProyecto\\Test"));
             jFileChooser1.showOpenDialog(jFileChooser1);
 
             String patch = jFileChooser1.getSelectedFile().getAbsolutePath();
@@ -70,17 +70,23 @@ public class Ejemplo {
 
             //Encomiendas
             ArrayList<Encomienda> enco = new ArrayList<>();
-            for (int j = 3; j < data.size(); j++) {
+            for (int j = 2; j < data.size(); j++) {
                 String[] lineasSiguientes = data.get(j).split(",");
                 int ubicacionx = Integer.parseInt(lineasSiguientes[0]);
                 int ubicaciony = Integer.parseInt(lineasSiguientes[1]);
-                Encomienda e = new Encomienda(j - 3, ubicacionx, ubicaciony);
+                Encomienda e = new Encomienda(j - 2, ubicacionx, ubicaciony);
                 enco.add(e);
                 System.out.println("encomineda " + (j - 2) + " - " + "(" + data.get(j) + ")");
             }
             
+            //=========================================
+           
+        
+            //=========================================
+            
+            
             System.out.println("========================= Encomiendas Con su index y ubicación =========================");
-            for (int i = 0; i < enco.size(); i++) {
+            for (int i = 1; i < enco.size(); i++) {
 
                 System.out.println("Index " + enco.get(i).getIndex() + " => "
                         + enco.get(i).getX() + ", " + enco.get(i).getY());
@@ -101,5 +107,4 @@ public class Ejemplo {
         }
 
     }
-
 }
